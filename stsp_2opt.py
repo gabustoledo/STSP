@@ -1,5 +1,14 @@
 import math
 import matplotlib.pyplot as plt
+import time
+
+# Función para medir el tiempo de ejecución de una función determinada
+def measure_execution_time(func):
+    start_time = time.time()
+    func()
+    end_time = time.time()
+    execution_time = end_time - start_time
+    return execution_time
 
 def read_cities_file(filename):
     cities = []
@@ -65,25 +74,30 @@ def plot_route(route, cities):
     plt.grid(True)
     plt.show()
 
-filename = 'sahara.txt'
-cities = read_cities_file(filename)
+def main():
+    filename = 'qatar.txt'  # Nombre del archivo de texto
+    cities = read_cities_file(filename)
 
-# Genera un recorrido inicial 
-initial_path = list(range(len(cities)))
+    # Genera un recorrido inicial (por ejemplo, [0, 1, 2, ..., n-1])
+    initial_path = list(range(len(cities)))
 
-# Aplica el método 2-opt para mejorar el recorrido
-optimized_path = two_opt(initial_path, cities)
+    # Aplica el método 2-opt para mejorar el recorrido
+    optimized_path = two_opt(initial_path, cities)
 
-# Calcula la longitud total de la ruta original y la ruta optimizada
-initial_length = calculate_path_length(initial_path, cities)
-optimized_length = calculate_path_length(optimized_path, cities)
+    # Calcula la longitud total de la ruta original y la ruta optimizada
+    initial_length = calculate_path_length(initial_path, cities)
+    optimized_length = calculate_path_length(optimized_path, cities)
 
-# Imprime el recorrido original y el recorrido optimizado
-print("Recorrido original:", initial_path)
-print("Recorrido optimizado:", optimized_path)
-print("Longitud total de la ruta original:", initial_length)
-print("Longitud total de la ruta optimizada:", optimized_length)
+    # Imprime el recorrido original, el recorrido optimizado y la longitud total de la ruta
+    print("Recorrido original:", initial_path)
+    print("Recorrido optimizado:", optimized_path)
+    print("Longitud total de la ruta original:", initial_length)
+    print("Longitud total de la ruta optimizada:", optimized_length)
 
-# Grafica ambas rutas
-plot_route(initial_path, cities)
-plot_route(optimized_path, cities)
+    # Grafica ambas rutas
+    #plot_route(initial_path, cities)
+    #plot_route(optimized_path, cities)
+
+# Mide el tiempo de ejecución de la función main()
+execution_time = measure_execution_time(main)
+print("Tiempo de ejecución:", execution_time, "segundos")
