@@ -86,14 +86,28 @@ def genetic_algorithm(city_list, population_size, tournament_size, mutation_rate
     
     return best_individual
 
-# Example usage
-city_list = [(0, 0), (1, 2), (3, 1), (5, 2), (1,1),(4,6)]  # Replace with your own city coordinates
-population_size = 50
-tournament_size = 5
-mutation_rate = 0.1
-generations = 100
+def read_cities_file(filename):
+    cities = []
+    with open(filename, 'r') as file:
+        for line in file:
+            city_info = line.strip().split()
+            city_id = int(city_info[0])
+            x = float(city_info[1])
+            y = float(city_info[2])
+            city = (x, y)
+            cities.append(city)
+    return cities
 
-best_solution = genetic_algorithm(city_list, population_size, tournament_size, mutation_rate, generations)
-print("Best solution:", best_solution.cities)
+# Example usage
+filename = '../djibouti.txt'  # Nombre del archivo de texto
+cities = read_cities_file(filename)
+
+population_size = 100
+tournament_size = 10
+mutation_rate = 0.3
+generations = 300
+
+best_solution = genetic_algorithm(cities, population_size, tournament_size, mutation_rate, generations)
+# print("Best solution:", best_solution.cities)
 print("Fitness:", best_solution.fitness)
-print(best_solution.distance)
+print("Distance:", best_solution.distance)
